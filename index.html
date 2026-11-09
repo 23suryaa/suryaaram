@@ -401,12 +401,11 @@ main > section:not(.stage){ position:relative; z-index:1; }
   filter:blur(3px); transform:translate(calc(-50% + var(--gx, 0px)), -50%); will-change:transform; }
 
 /* robots: photos tilt toward the cursor with a soft glare */
-#robots .bot{ perspective:1100px; }
-#robots .bot .media{ transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0); transition:transform .5s var(--ease), box-shadow .5s; will-change:transform; }
-#robots .bot .media.tilting{ transition:transform .08s linear, box-shadow .5s; box-shadow:0 40px 80px rgba(0,0,0,.55), 0 0 0 1px var(--hair-2); }
-#robots .bot .media::after{ content:""; position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0; transition:opacity .4s;
-  background:radial-gradient(circle at var(--gx,50%) var(--gy,50%), rgba(220,240,255,.28), rgba(140,200,255,.08) 30%, transparent 60%); mix-blend-mode:screen; }
-#robots .bot .media.tilting::after{ opacity:1; }
+:is(#robots .bot .media, .about-photo, .mphoto){ position:relative; transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)); transition:transform .7s var(--ease), box-shadow .5s; will-change:transform; }
+:is(#robots .bot .media, .about-photo, .mphoto).tilting{ transition:transform .35s var(--ease), box-shadow .5s; box-shadow:0 40px 80px rgba(0,0,0,.55), 0 0 0 1px var(--hair-2); }
+:is(#robots .bot .media, .about-photo, .mphoto)::after{ content:""; position:absolute; inset:0; z-index:3; pointer-events:none; opacity:0; transition:opacity .4s;
+  background:radial-gradient(circle at var(--gx,50%) var(--gy,50%), rgba(220,240,255,.16), rgba(140,200,255,.05) 30%, transparent 60%); mix-blend-mode:screen; }
+:is(#robots .bot .media, .about-photo, .mphoto).tilting::after{ opacity:1; }
 #robots .bot:hover .media img{ transform:scale(1.06); }
 
 /* ── contact form (same pattern as team23441.com) ── */
@@ -1422,11 +1421,11 @@ if (new URLSearchParams(location.search).has('tune')){
 // robots: photos tilt toward the cursor
 (() => {
   if (matchMedia('(hover: none)').matches) return;
-  document.querySelectorAll('#robots .bot .media').forEach(m => {
+  document.querySelectorAll('#robots .bot .media, .about-photo, .mphoto').forEach(m => {
     m.addEventListener('pointermove', e => {
       const r = m.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
       m.classList.add('tilting');
-      m.style.setProperty('--ry', ((x - .5) * 14).toFixed(2) + 'deg'); m.style.setProperty('--rx', ((.5 - y) * 12).toFixed(2) + 'deg');
+      m.style.setProperty('--ry', ((x - .5) * 7).toFixed(2) + 'deg'); m.style.setProperty('--rx', ((.5 - y) * 6).toFixed(2) + 'deg');
       m.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); m.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
     });
     m.addEventListener('pointerleave', () => { m.classList.remove('tilting'); m.style.setProperty('--rx', '0deg'); m.style.setProperty('--ry', '0deg'); });
