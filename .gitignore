@@ -1,0 +1,11 @@
+# Publish only the live site; theme mockups and test layouts stay local.
+/*
+!/index.html
+!/.gitignore
+!/.nojekyll
+!/assets/
+/assets/*
+!/assets/img/
+!/assets/models/
+/assets/models/*
+!/assets/models/khronos-lite.glb
