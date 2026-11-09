@@ -564,7 +564,7 @@ footer a:hover{ color:var(--ice); }
   <div class="boot-in">
     <span class="boot-mark">builtby<b>suryaa</b><em>.</em></span>
     <span class="boot-bar"><i id="bootBar"></i></span>
-    <span class="mono" id="bootText">Loading model &middot; 0%</span>
+    <span class="mono" id="bootText">Loading site &middot; 0%</span>
   </div>
 </div>
 <script>document.documentElement.classList.add('booting');</script>
@@ -684,7 +684,7 @@ footer a:hover{ color:var(--ice); }
           <p class="feat-lede">My best-performing FTC robot, and the build I&rsquo;m proudest of. Over <b>500 hours</b> went into designing it, iterating on it, and practicing with it, until it was winning awards and posting our best scores of the season.</p>
           <a class="feat-link" href="#khronos">See more details</a>
         </div>
-        <div class="loader mono" id="loader"><span id="lText">Loading model &middot; 0%</span><span class="bar"><i id="lBar"></i></span></div>
+        <div class="loader mono" id="loader"><span id="lText">Loading site &middot; 0%</span><span class="bar"><i id="lBar"></i></span></div>
       </div>
     </div>
   </section>
@@ -1060,8 +1060,9 @@ function prep(root, size, { holoOwn = null, tag = '', useHolo = true } = {}){
 const kids = n => { while (n.children.length === 1) n = n.children[0]; return n.children; };
 
 const progress = p => {
+  p = Math.min(1, Math.max(0, p || 0));           // compressed downloads can report more bytes than the total
   p = Math.round(p * 100);
-  $('lText').textContent = $('bootText').textContent = `Loading model · ${p}%`;
+  $('lText').textContent = $('bootText').textContent = `Loading site · ${p}%`;
   $('lBar').style.width = p + '%'; $('bootBar').style.width = (p * .95) + '%';
 };
 
@@ -1086,7 +1087,7 @@ let visible = true;
 let ready = false, booted = false, started = false, startT = 0;
 function markReady(){
   stage.classList.add('ready'); ready = true; resize();
-  $('bootText').textContent = 'Preparing model';
+  $('bootText').textContent = 'Loading site · 100%'; $('bootBar').style.width = '100%';
   renderer.render(scene, camera);                       // hidden frame pushes geometry to the GPU
   requestAnimationFrame(() => requestAnimationFrame(() => { window.finishBoot(); tryStart(); }));
 }
