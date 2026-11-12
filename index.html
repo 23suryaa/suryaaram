@@ -1026,8 +1026,8 @@ const FRAG = `
     vec3 V = normalize(cameraPosition - vW);
     float fres = pow(1.0 - clamp(dot(N, V), 0.0, 1.0), 2.4);
     float lam = clamp(dot(N, normalize(vec3(.35, .9, .45))), 0.0, 1.0);
-    vec3 col = mix(uFill, uBase * .35 + uFill * .6, .35) * (.55 + .7 * lam);
-    col += uRim * fres * 1.15;
+    vec3 col = mix(uFill, uBase * .35 + uFill * .6, .35) * (.75 + .9 * lam) + vec3(.03, .06, .1);
+    col += uRim * fres * 1.35;
     vec3 q = vW * 9.0, g = abs(fract(q - .5) - .5) / fwidth(q);
     col += uRim * (1.0 - clamp(min(min(g.x, g.y), g.z), 0.0, 1.0)) * .09;
     col += uAccent * exp(-abs(d) * 26.0) * 1.8;
